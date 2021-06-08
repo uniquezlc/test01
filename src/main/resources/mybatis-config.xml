@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <!--加载数据源文件-->
+    <properties resource="db.properties"/>
+
+    <!--为所有的domain中的类起别名，xml中直接写类名就可-->
+    <typeAliases>
+        <package name="com.zlc.domain"/>
+    </typeAliases>
+    <!--连接数据库相关数据源-->
+    <environments default="dataSource">
+        <environment id="dataSource">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--注册dao层的xml文件-->
+    <mappers>
+       <package name="com.zlc.dao"/>
+    </mappers>
+
+</configuration>

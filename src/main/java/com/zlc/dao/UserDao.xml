@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlc.dao.UserDao">
+    <select id="getUserById" resultType="com.zlc.domain.User" parameterType="Integer">
+        select * from user where id = #{id}
+    </select>
+    <insert id="addUser">
+        insert into user values(#{id},#{name},#{content},#{state},#{phone})
+    </insert>
+    <update id="updUser">
+        update user set content = #{content} where id = #{id}
+    </update>
+    <select id="getAll" resultType="User">
+        select * from user
+    </select>
+    <select id="getAllByContent" resultType="User">
+        select * from user where content like '%' #{content} '%'
+    </select>
+    <select id="getAllByLike" parameterType="User" resultType="User">
+        select * from user
+        <where>
+            <if test="name != null and name !=''">
+                and name like '%' #{name} '%'
+            </if>
+            <if test="content != null and content !=''">
+                and content like '%' #{content} '%'
+            </if>
+        </where>
+    </select>
+    <select id="getAllByArray" resultType="User">
+        select * from user where id in 
+        
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="getAllBys" resultType="Map">
+        select u.name as u_name,
+        c.name as c_name,u.content
+        from user u
+        join class_1 c
+        on u.class_1 = c.id
+    </select>
+</mapper>
